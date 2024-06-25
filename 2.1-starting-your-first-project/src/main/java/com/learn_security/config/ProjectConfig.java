@@ -20,31 +20,18 @@ public class ProjectConfig {
 
         http.authorizeHttpRequests(c -> c.anyRequest().authenticated());
 
-        // Implement UserDetailsService interface
+        return http.build();
+    }
+
+    @Bean
+    UserDetailsService userDetailsService() {
         var user = User.withUsername("phuong")
                 .password("12345")
                 .authorities("read")
                 .build();
-
-        var userDetailsService = new InMemoryUserDetailsManager(user);
-
-        http.userDetailsService(userDetailsService);
-
-        return http.build();
+        return new InMemoryUserDetailsManager(user);
     }
 
-    /* If you* need to add define those beans to the context, lets you inject the values in another class where
-    * you might potentially need them.
-    * */
-//    @Bean
-//    UserDetailsService userDetailsService() {
-//        var user = User.withUsername("phuong")
-//                .password("12345")
-//                .authorities("read")
-//                .build();
-//        return new InMemoryUserDetailsManager(user);
-//    }
-//
     @Bean
     PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
