@@ -18,20 +18,33 @@ public class ProjectConfig {
     SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.httpBasic(Customizer.withDefaults());
 
-        http.authorizeHttpRequests(c -> c.anyRequest().permitAll());
+        http.authorizeHttpRequests(c -> c.anyRequest().authenticated());
 
-        return http.build();
-    }
-
-    @Bean
-    UserDetailsService userDetailsService() {
+        // Implement UserDetailsService interface
         var user = User.withUsername("phuong")
                 .password("12345")
                 .authorities("read")
                 .build();
-        return new InMemoryUserDetailsManager(user);
+
+        var userDetailsService = new InMemoryUserDetailsManager(user);
+
+        http.userDetailsService(userDetailsService);
+
+        return http.build();
     }
 
+    /* If you* need to add define those beans to the context, lets you inject the values in another class where
+    * you might potentially need them.
+    * */
+//    @Bean
+//    UserDetailsService userDetailsService() {
+//        var user = User.withUsername("phuong")
+//                .password("12345")
+//                .authorities("read")
+//                .build();
+//        return new InMemoryUserDetailsManager(user);
+//    }
+//
     @Bean
     PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
