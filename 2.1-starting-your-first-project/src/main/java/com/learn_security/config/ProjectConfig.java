@@ -13,10 +13,17 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class ProjectConfig {
+    private final CustomAuthenticationProvider authenticationProvider;
+
+    public ProjectConfig(CustomAuthenticationProvider authenticationProvider) {
+        this.authenticationProvider = authenticationProvider;
+    }
 
     @Bean
     SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.httpBasic(Customizer.withDefaults());
+
+        http.authenticationProvider(authenticationProvider);
 
         http.authorizeHttpRequests(c -> c.anyRequest().authenticated());
 
