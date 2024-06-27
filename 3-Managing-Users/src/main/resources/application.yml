@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: 3-managing-users
+
+server:
+  ssl:
+    key-store-type: PKCS12
+    key-store: classpath:certificate.p12
+    key-store-password: windowisnotmyhome
