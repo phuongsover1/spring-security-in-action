@@ -1,30 +1,39 @@
 package com.learn_security.config;
 
-import com.learn_security.config.services.PlainTextPasswordEncoder;
+import com.learn_security.config.services.InMemoryUserDetailsService;
 import com.learn_security.config.services.Sha512PasswordEncoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
-import javax.sql.DataSource;
+import java.util.List;
 
 @Configuration
 public class UserManagementConfig {
 
     @Bean
-    public UserDetailsService userDetailsService(DataSource dataSource) {
-        String usersByUsernameQuery =
-                "SELECT username, password, enabled FROM custom_users WHERE username = ?";
-        String authsByUserQuery =
-                "SELECT username, authority FROM custom_authorities WHERE username = ?";
+    public UserDetailsService userDetailsService() {
+        User.UserBuilder userBuilder = User.builder()
+                .accountExpired(false)
+                .accountLocked(false)
+                .credentialsExpired(false)
+                .disabled(false)
+                .authorities("READ")
+                .passwordEncoder(p -> passwordEncoder().encode(p));
 
-        var userDetailsService = new JdbcUserDetailsManager(dataSource);
-        userDetailsService.setUsersByUsernameQuery(usersByUsernameQuery);
-        userDetailsService.setAuthoritiesByUsernameQuery(authsByUserQuery);
+        UserDetails u1 = userBuilder.username("phuong")
+                .password("123456")
+                .build();
 
-        return userDetailsService;
+        UserDetails u2 = userBuilder.username("john")
+                .password("12345")
+                .build();
+
+        return new InMemoryUserDetailsService(List.of(u1, u2));
+
     }
 
     @Bean
