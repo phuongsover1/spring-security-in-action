@@ -1,6 +1,7 @@
 package com.learn_security.config;
 
 import com.learn_security.config.services.PlainTextPasswordEncoder;
+import com.learn_security.config.services.Sha512PasswordEncoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -28,6 +29,6 @@ public class UserManagementConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new PlainTextPasswordEncoder();
+        return new Sha512PasswordEncoder();
     }
 }
