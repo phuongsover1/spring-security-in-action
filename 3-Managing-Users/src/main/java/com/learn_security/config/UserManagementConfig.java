@@ -14,8 +14,16 @@ public class UserManagementConfig {
 
     @Bean
     public UserDetailsService userDetailsService(DataSource dataSource) {
-        return new JdbcUserDetailsManager(dataSource);
+        String usersByUsernameQuery =
+                "SELECT username, password, enabled FROM custom_users WHERE username = ?";
+        String authsByUserQuery =
+                "SELECT username, authority FROM custom_authorities WHERE username = ?";
 
+        var userDetailsService = new JdbcUserDetailsManager(dataSource);
+        userDetailsService.setUsersByUsernameQuery(usersByUsernameQuery);
+        userDetailsService.setAuthoritiesByUsernameQuery(authsByUserQuery);
+
+        return userDetailsService;
     }
 
     @Bean
