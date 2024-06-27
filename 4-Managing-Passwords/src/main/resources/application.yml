@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: 4-managing-passwords
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/spring-security
+    username: postgres
+    password: root
+
+  sql:
+    init:
+      mode: always
+
+
+server:
+  ssl:
+    key-store-type: PKCS12
+    key-store: classpath:certificate.p12
+    key-store-password: windowisnotmyhome
+
