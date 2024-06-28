@@ -13,7 +13,8 @@ public class SpringSecurityCrypto implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         // 4.2.1 Using key generators
-        usingKeyGenerators();
+//         usingKeyGenerators();
+        using16ByteKeyGenerators();
     }
 
     private void usingKeyGenerators() {
@@ -22,6 +23,14 @@ public class SpringSecurityCrypto implements CommandLineRunner {
         log.info("StringKeyGenerator's salt: {}", salt);
 
         BytesKeyGenerator keyGenerator = KeyGenerators.secureRandom();
+        byte[] key = keyGenerator.generateKey();
+        int keyLength = keyGenerator.getKeyLength();
+        log.info("Byte key: {}", key);
+        log.info("Byte key's length: {}", keyLength);
+    }
+
+    private void using16ByteKeyGenerators() {
+        BytesKeyGenerator keyGenerator = KeyGenerators.secureRandom(16);
         byte[] key = keyGenerator.generateKey();
         int keyLength = keyGenerator.getKeyLength();
         log.info("Byte key: {}", key);
