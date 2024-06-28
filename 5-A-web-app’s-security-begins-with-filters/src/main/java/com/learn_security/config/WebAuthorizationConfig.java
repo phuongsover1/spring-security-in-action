@@ -17,7 +17,7 @@ public class WebAuthorizationConfig {
                 BasicAuthenticationFilter.class
         );
 
-        http.authorizeHttpRequests(c -> c.anyRequest().authenticated());
+        http.authorizeHttpRequests(c -> c.anyRequest().permitAll());
 
         return http.build();
     }
