@@ -78,6 +78,15 @@ public class SpringSecurityCrypto implements CommandLineRunner {
         log.info("not encrypted value: {}", valueToEncrypt.getBytes());
         log.info("encrypted: {}", encrypted);
         log.info("decrypted: {}", decrypted);
+
+        String salt1 = KeyGenerators.string().generateKey();
+        BytesEncryptor e1 = Encryptors.stronger(password, salt1);
+        log.info("not encrypted value: {}", valueToEncrypt.getBytes());
+        encrypted = e1.encrypt(valueToEncrypt.getBytes());
+        decrypted = e1.decrypt(encrypted);
+
+        log.info("encrypted with salt1: {}", encrypted);
+        log.info("decrypted with salt1: {}", decrypted);
     }
 
 }
