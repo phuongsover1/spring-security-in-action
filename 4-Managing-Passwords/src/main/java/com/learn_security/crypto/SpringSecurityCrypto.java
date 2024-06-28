@@ -2,6 +2,8 @@ package com.learn_security.crypto;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.encrypt.BytesEncryptor;
+import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.security.crypto.keygen.BytesKeyGenerator;
 import org.springframework.security.crypto.keygen.KeyGenerators;
 import org.springframework.security.crypto.keygen.StringKeyGenerator;
@@ -15,8 +17,10 @@ public class SpringSecurityCrypto implements CommandLineRunner {
         // 4.2.1 Using key generators
 //         usingKeyGenerators();
 //        using16ByteKeyGenerators();
-        returnSameKeyValueForEachCallToGenerateKeyMethod();
+//        returnSameKeyValueForEachCallToGenerateKeyMethod();
+        encryptAndDecryptUsingEncryptorObject();
     }
+
 
     private void usingKeyGenerators() {
         StringKeyGenerator stringKeyGenerator = KeyGenerators.string();
@@ -44,6 +48,20 @@ public class SpringSecurityCrypto implements CommandLineRunner {
         byte[] key2 = keyGenerator.generateKey();
         log.info("Key 1: {}", key1);
         log.info("Key 2: {}", key2);
+    }
+
+    private void encryptAndDecryptUsingEncryptorObject() {
+        String salt = KeyGenerators.string().generateKey();
+        String password = "secret";
+        String valueToEncrypt = "HELLO";
+
+        BytesEncryptor e = Encryptors.standard(password, salt);
+        byte[] encrypted = e.encrypt(valueToEncrypt.getBytes());
+        byte[] decrypted = e.decrypt(encrypted);
+
+        log.info("not encrypted value: {}", valueToEncrypt.getBytes());
+        log.info("encrypted: {}", encrypted);
+        log.info("decrypted: {}", decrypted);
     }
 
 }
