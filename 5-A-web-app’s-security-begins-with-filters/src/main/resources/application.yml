@@ -1,6 +1,6 @@
 spring:
   application:
-    name: 4-managing-passwords
+    name: 5-Web-Security-With-Filter
 
 server:
   ssl:

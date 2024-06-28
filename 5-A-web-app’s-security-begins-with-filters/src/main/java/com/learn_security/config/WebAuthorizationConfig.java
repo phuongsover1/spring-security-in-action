@@ -1,5 +1,6 @@
 package com.learn_security.config;
 
+import com.learn_security.config.filter.AuthenticationLoggingFilter;
 import com.learn_security.config.filter.RequestValidationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,10 +14,15 @@ public class WebAuthorizationConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.addFilterBefore(
-                new RequestValidationFilter(),
-                BasicAuthenticationFilter.class
-        );
+        http
+                .addFilterBefore(
+                        new RequestValidationFilter(),
+                        BasicAuthenticationFilter.class
+                )
+                .addFilterAfter(
+                        new AuthenticationLoggingFilter(),
+                        BasicAuthenticationFilter.class
+                );
         http.httpBasic(Customizer.withDefaults());
 
         http.authorizeHttpRequests(c -> c.anyRequest().authenticated());
