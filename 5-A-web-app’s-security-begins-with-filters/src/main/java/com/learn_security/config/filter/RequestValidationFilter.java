@@ -19,7 +19,7 @@ public class RequestValidationFilter implements Filter {
             return;
         }
 
-        filterChain.doFilter(httpRequest, httpResponse);
+        filterChain.doFilter(servletRequest, servletResponse);
 
     }
 }
