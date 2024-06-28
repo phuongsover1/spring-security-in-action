@@ -18,8 +18,10 @@ public class SpringSecurityCrypto implements CommandLineRunner {
 //         usingKeyGenerators();
 //        using16ByteKeyGenerators();
 //        returnSameKeyValueForEachCallToGenerateKeyMethod();
-        encryptAndDecryptUsingEncryptorObject();
+//        encryptAndDecryptUsingEncryptorObject();
+        encryptAndDecryptUsingEncryptorObjectStronger();
     }
+
 
 
     private void usingKeyGenerators() {
@@ -56,6 +58,20 @@ public class SpringSecurityCrypto implements CommandLineRunner {
         String valueToEncrypt = "HELLO";
 
         BytesEncryptor e = Encryptors.standard(password, salt);
+        byte[] encrypted = e.encrypt(valueToEncrypt.getBytes());
+        byte[] decrypted = e.decrypt(encrypted);
+
+        log.info("not encrypted value: {}", valueToEncrypt.getBytes());
+        log.info("encrypted: {}", encrypted);
+        log.info("decrypted: {}", decrypted);
+    }
+
+    private void encryptAndDecryptUsingEncryptorObjectStronger() {
+        String salt = KeyGenerators.string().generateKey();
+        String password = "secret";
+        String valueToEncrypt = "HELLO";
+
+        BytesEncryptor e = Encryptors.stronger(password, salt);
         byte[] encrypted = e.encrypt(valueToEncrypt.getBytes());
         byte[] decrypted = e.decrypt(encrypted);
 
