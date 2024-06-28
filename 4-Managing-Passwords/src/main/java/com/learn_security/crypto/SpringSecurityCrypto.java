@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.encrypt.BytesEncryptor;
 import org.springframework.security.crypto.encrypt.Encryptors;
+import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.security.crypto.keygen.BytesKeyGenerator;
 import org.springframework.security.crypto.keygen.KeyGenerators;
 import org.springframework.security.crypto.keygen.StringKeyGenerator;
@@ -19,8 +20,10 @@ public class SpringSecurityCrypto implements CommandLineRunner {
 //        using16ByteKeyGenerators();
 //        returnSameKeyValueForEachCallToGenerateKeyMethod();
 //        encryptAndDecryptUsingEncryptorObject();
-        encryptAndDecryptUsingEncryptorObjectStronger();
+//        encryptAndDecryptUsingEncryptorObjectStronger();
+        encryptAndDecryptUsingTextEncryptor();
     }
+
 
 
 
@@ -88,5 +91,19 @@ public class SpringSecurityCrypto implements CommandLineRunner {
         log.info("encrypted with salt1: {}", encrypted);
         log.info("decrypted with salt1: {}", decrypted);
     }
+
+    private void encryptAndDecryptUsingTextEncryptor() {
+        String salt = KeyGenerators.string().generateKey();
+        String password = "secret";
+        String valueToEncrypt = "HELLO";
+
+        TextEncryptor e= Encryptors.text(password, salt);
+        String encrypted = e.encrypt(valueToEncrypt);
+        String decrypted = e.decrypt(encrypted);
+
+        log.info("Encrypted: {}", encrypted);
+        log.info("Decrypted: {}", decrypted);
+    }
+
 
 }
