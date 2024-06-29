@@ -1,5 +1,6 @@
 package com.learn_security.config;
 
+import com.learn_security.config.filter.AuthenticationLoggingFilter;
 import com.learn_security.config.filter.StaticKeyAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +21,7 @@ public class WebAuthorizationConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.addFilterAt(filter, BasicAuthenticationFilter.class);
+        http.addFilterAfter(new AuthenticationLoggingFilter(), BasicAuthenticationFilter.class);
 
         http.authorizeHttpRequests(c -> c.anyRequest().permitAll());
 
