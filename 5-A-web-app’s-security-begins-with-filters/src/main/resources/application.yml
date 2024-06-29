@@ -8,3 +8,5 @@ server:
     key-store: classpath:certificate.p12
     key-store-password: windowisnotmyhome
 
+authorization:
+  key: SD9cICjl1e
