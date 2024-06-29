@@ -3,6 +3,7 @@ package com.learn_security.controllers;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.concurrent.DelegatingSecurityContextCallable;
+import org.springframework.security.concurrent.DelegatingSecurityContextExecutorService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -46,5 +47,22 @@ public class HomeController {
             e.shutdown();
         }
     }
+
+    @GetMapping("/hola")
+    public String hola() throws Exception {
+        Callable<String> task = () -> {
+            SecurityContext securityContext = SecurityContextHolder.getContext();
+            return securityContext.getAuthentication().getName();
+        };
+
+        ExecutorService e = Executors.newCachedThreadPool();
+        e = new DelegatingSecurityContextExecutorService(e);
+        try {
+            return "Hola, " + e.submit(task).get() + "!";
+        } finally {
+            e.shutdown();
+        }
+    }
+
 
 }
