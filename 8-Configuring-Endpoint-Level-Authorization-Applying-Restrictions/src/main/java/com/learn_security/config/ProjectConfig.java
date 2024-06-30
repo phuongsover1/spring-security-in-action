@@ -44,10 +44,10 @@ public class ProjectConfig {
         http.httpBasic(Customizer.withDefaults());
 
         http.authorizeHttpRequests(c -> {
-            c.requestMatchers("/a/b/**")
-                    .authenticated();
-            c.anyRequest()
+            c.requestMatchers("/product/{code:^[0-9]*$}")
                     .permitAll();
+            c.anyRequest()
+                    .denyAll();
         });
 
         http.csrf(c -> c.disable());
