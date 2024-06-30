@@ -2,6 +2,7 @@ package com.learn_security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -44,10 +45,15 @@ public class ProjectConfig {
         http.httpBasic(Customizer.withDefaults());
 
         http.authorizeHttpRequests(c -> {
-            c.requestMatchers("/hello").hasRole("ADMIN");
-            c.requestMatchers("/ciao").hasRole("MANAGER");
-            c.anyRequest().authenticated();
+            c.requestMatchers(HttpMethod.GET, "/a")
+                    .authenticated();
+            c.requestMatchers(HttpMethod.POST, "/a")
+                    .permitAll();
+            c.anyRequest()
+                    .denyAll();
         });
+
+        http.csrf(c -> c.disable());
 
         return http.build();
     }
