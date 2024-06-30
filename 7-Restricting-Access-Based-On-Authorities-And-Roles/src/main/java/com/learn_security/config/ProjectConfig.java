@@ -11,7 +11,6 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.expression.WebExpressionAuthorizationManager;
 
 import java.util.List;
 
@@ -23,12 +22,12 @@ public class ProjectConfig {
                 .disabled(false);
         UserDetails u1 = builder.username("john")
                 .password("12345")
-                .authorities("READ")
+                .authorities("ROLE_ADMIN")
                 .build();
 
         UserDetails u2 = builder.username("jane")
                 .password("123456")
-                .authorities("WRITE")
+                .authorities("ROLE_MANAGER")
                 .build();
         return new InMemoryUserDetailsManager(List.of(u1, u2));
     }
@@ -45,7 +44,7 @@ public class ProjectConfig {
         http.httpBasic(Customizer.withDefaults());
 
         http.authorizeHttpRequests(c -> c.anyRequest()
-                .access(new WebExpressionAuthorizationManager("hasAuthority('WRITE')")));
+                .hasRole("ADMIN"));
 
         return http.build();
     }
