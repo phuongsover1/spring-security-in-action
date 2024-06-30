@@ -43,7 +43,7 @@ public class ProjectConfig {
 
         http.httpBasic(Customizer.withDefaults());
 
-        http.authorizeHttpRequests(c -> c.anyRequest().permitAll());
+        http.authorizeHttpRequests(c -> c.anyRequest().hasAuthority("WRITE"));
 
         return http.build();
     }
