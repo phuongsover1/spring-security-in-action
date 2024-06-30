@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 
 import java.util.List;
 
@@ -22,12 +23,12 @@ public class ProjectConfig {
                 .disabled(false);
         UserDetails u1 = builder.username("john")
                 .password("12345")
-                .roles("ADMIN")
+                .authorities("READ")
                 .build();
 
         UserDetails u2 = builder.username("jane")
                 .password("123456")
-                .roles("MANAGER")
+                .authorities("READ", "PREMIUM")
                 .build();
         return new InMemoryUserDetailsManager(List.of(u1, u2));
     }
@@ -42,12 +43,12 @@ public class ProjectConfig {
             throws Exception {
 
         http.httpBasic(Customizer.withDefaults());
-
+//        ".*/(us|uk|ca)+/(en|fr).*"
         http.authorizeHttpRequests(c -> {
-            c.requestMatchers("/email/{email:.*(?:.+@.+\\.com)}")
-                    .permitAll();
+            c.requestMatchers(RegexRequestMatcher.regexMatcher(".*/(us|uk|ca)+/(en|fr).*"))
+                    .authenticated();
             c.anyRequest()
-                    .denyAll();
+                    .hasAuthority("PREMIUM");
         });
 
         http.csrf(c -> c.disable());
