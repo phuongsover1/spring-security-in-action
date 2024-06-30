@@ -16,9 +16,11 @@ import java.util.List;
 @Configuration
 public class ProjectConfig {
     private final CustomAuthenticationSuccessHandler authenticationSuccessHandler;
+    private final CustomAuthenticationFailureHandler authenticationFailureHandler;
 
-    public ProjectConfig(CustomAuthenticationSuccessHandler authenticationSuccessHandler) {
+    public ProjectConfig(CustomAuthenticationSuccessHandler authenticationSuccessHandler, CustomAuthenticationFailureHandler authenticationFailureHandler) {
         this.authenticationSuccessHandler = authenticationSuccessHandler;
+        this.authenticationFailureHandler = authenticationFailureHandler;
     }
 
     @Bean
@@ -27,9 +29,13 @@ public class ProjectConfig {
         http.formLogin(c -> {
             c.defaultSuccessUrl("/home", true);
             c.successHandler(authenticationSuccessHandler);
+            c.failureHandler(authenticationFailureHandler);
         });
 
-        http.authorizeHttpRequests(c -> c.anyRequest().authenticated());
+        http.authorizeHttpRequests(c -> {
+            c.requestMatchers("/error").permitAll();
+            c.anyRequest().authenticated();
+        });
         return http.build();
     }
 
