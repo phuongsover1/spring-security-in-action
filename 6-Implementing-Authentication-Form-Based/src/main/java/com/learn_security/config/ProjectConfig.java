@@ -2,6 +2,7 @@ package com.learn_security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,7 +28,6 @@ public class ProjectConfig {
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
 
         http.formLogin(c -> {
-            c.defaultSuccessUrl("/home", true);
             c.successHandler(authenticationSuccessHandler);
             c.failureHandler(authenticationFailureHandler);
         });
@@ -36,6 +36,8 @@ public class ProjectConfig {
             c.requestMatchers("/error").permitAll();
             c.anyRequest().authenticated();
         });
+
+        http.httpBasic(Customizer.withDefaults());
         return http.build();
     }
 
