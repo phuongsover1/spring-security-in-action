@@ -11,7 +11,6 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.expression.WebExpressionAuthorizationManager;
 
 import java.util.List;
 
@@ -44,13 +43,11 @@ public class ProjectConfig {
 
         http.httpBasic(Customizer.withDefaults());
 
-        String expression = """
-                hasRole('ADMIN') OR\s
-                T(java.time.LocalTime).now().isAfter(T(java.time.LocalTime).of(12,0))
-                """;
-
-        http.authorizeHttpRequests(c -> c.anyRequest()
-                .access(new WebExpressionAuthorizationManager(expression)));
+        http.authorizeHttpRequests(c -> {
+            c.requestMatchers("/hello").hasRole("ADMIN");
+            c.requestMatchers("/ciao").hasRole("MANAGER");
+            c.anyRequest().permitAll();
+        });
 
         return http.build();
     }
