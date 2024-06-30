@@ -22,12 +22,12 @@ public class ProjectConfig {
                 .disabled(false);
         UserDetails u1 = builder.username("john")
                 .password("12345")
-                .authorities("ROLE_ADMIN")
+                .roles("ADMIN")
                 .build();
 
         UserDetails u2 = builder.username("jane")
                 .password("123456")
-                .authorities("ROLE_MANAGER")
+                .roles("MANAGER")
                 .build();
         return new InMemoryUserDetailsManager(List.of(u1, u2));
     }
