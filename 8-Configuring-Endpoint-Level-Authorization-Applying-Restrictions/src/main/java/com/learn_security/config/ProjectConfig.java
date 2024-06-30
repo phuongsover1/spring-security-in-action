@@ -1,8 +1,8 @@
 package com.learn_security.config;
 
+import com.learn_security.CsrfTokenLogger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,7 +11,7 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.RegexRequestMatcher;
+import org.springframework.security.web.csrf.CsrfFilter;
 
 import java.util.List;
 
@@ -42,16 +42,10 @@ public class ProjectConfig {
     public SecurityFilterChain filterChain(HttpSecurity http)
             throws Exception {
 
-        http.httpBasic(Customizer.withDefaults());
-//        ".*/(us|uk|ca)+/(en|fr).*"
-        http.authorizeHttpRequests(c -> {
-            c.requestMatchers(RegexRequestMatcher.regexMatcher(".*/(us|uk|ca)+/(en|fr).*"))
-                    .authenticated();
-            c.anyRequest()
-                    .hasAuthority("PREMIUM");
-        });
+        http.addFilterAfter(new CsrfTokenLogger(), CsrfFilter.class);
 
-        http.csrf(c -> c.disable());
+        http.authorizeHttpRequests(c -> c.anyRequest().permitAll());
+
 
         return http.build();
     }
