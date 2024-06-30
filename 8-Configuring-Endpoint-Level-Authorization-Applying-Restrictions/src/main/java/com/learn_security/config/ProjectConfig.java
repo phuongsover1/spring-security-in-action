@@ -44,7 +44,7 @@ public class ProjectConfig {
         http.httpBasic(Customizer.withDefaults());
 
         http.authorizeHttpRequests(c -> {
-            c.requestMatchers("/product/{code:^[0-9]*$}")
+            c.requestMatchers("/email/{email:.*(?:.+@.+\\.com)}")
                     .permitAll();
             c.anyRequest()
                     .denyAll();
