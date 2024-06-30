@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.expression.WebExpressionAuthorizationManager;
 
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class ProjectConfig {
         http.httpBasic(Customizer.withDefaults());
 
         http.authorizeHttpRequests(c -> c.anyRequest()
-                .hasAnyAuthority("WRITE", "READ"));
+                .access(new WebExpressionAuthorizationManager("hasAuthority('WRITE')")));
 
         return http.build();
     }
