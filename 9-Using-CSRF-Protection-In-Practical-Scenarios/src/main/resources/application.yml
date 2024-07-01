@@ -1,0 +1,3 @@
+spring:
+  application:
+    name: 9-Using-CSRF-protection-in-practical-scenarios
