@@ -36,12 +36,12 @@ public class ProjectConfig {
 
         var u1 = User.withUsername("natalie")
                 .password("12345")
-                .authorities("READ")
+                .roles("ADMIN")
                 .build();
 
         var u2 = User.withUsername("emma")
                 .password("12345")
-                .authorities("WRITE")
+                .authorities("MANAGER")
                 .build();
 
         service.createUser(u1);
