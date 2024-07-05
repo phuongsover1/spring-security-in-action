@@ -13,7 +13,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
-@EnableMethodSecurity
+@EnableMethodSecurity(
+        jsr250Enabled = true,
+        securedEnabled = true
+)
 public class ProjectConfig {
     private final DocumentPermissionEvaluator evaluator;
 
@@ -41,7 +44,7 @@ public class ProjectConfig {
 
         var u2 = User.withUsername("emma")
                 .password("12345")
-                .authorities("MANAGER")
+                .roles("MANAGER")
                 .build();
 
         service.createUser(u1);
