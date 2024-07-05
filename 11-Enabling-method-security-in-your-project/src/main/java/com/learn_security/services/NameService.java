@@ -1,6 +1,7 @@
 package com.learn_security.services;
 
 import jakarta.annotation.security.RolesAllowed;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +21,10 @@ public class NameService {
         return secretNames.get(name);
     }
 
-    @RolesAllowed(value = {"ADMIN"})
+//    @RolesAllowed(value = {"ADMIN"})
+    @Secured(value = {"ROLE_MANAGER"})
     public String getName() {
         return "Fantastico";
     }
+
 }
