@@ -27,4 +27,9 @@ public class ProductController {
         return productService.sellProducts(products);
 
     }
+
+    @GetMapping("/find")
+    public List<Product> findProducts() {
+        return productService.findProducts();
+    }
 }
