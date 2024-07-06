@@ -1,8 +1,9 @@
 package com.learn_security.controllers;
 
 import com.learn_security.models.Product;
-import com.learn_security.services.ProductService;
+import com.learn_security.repositories.ProductRepository;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -10,26 +11,14 @@ import java.util.List;
 @RestController
 public class ProductController {
 
-    private final ProductService productService;
+    private final ProductRepository productRepository;
 
-    public ProductController(ProductService productService) {
-        this.productService = productService;
+    public ProductController(ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
 
-    @GetMapping("/sell")
-    public List<Product> sellProducts() {
-        List<Product> products = List.of(
-                new Product("beer", "nikolai"),
-                new Product("candy", "nikolai"),
-                new Product("chocolate", "julien")
-        );
-
-        return productService.sellProducts(products);
-
-    }
-
-    @GetMapping("/find")
-    public List<Product> findProducts() {
-        return productService.findProducts();
+    @GetMapping("/products/{text}")
+    public List<Product> findProductsContaining(@PathVariable String text) {
+        return productRepository.findProductByNameContains(text);
     }
 }
