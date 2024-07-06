@@ -46,6 +46,14 @@ public class CustomCsrfTokenRepository implements CsrfTokenRepository {
 
     @Override
     public CsrfToken loadToken(HttpServletRequest request) {
+        String identifier = request.getHeader("X-IDENTIFIER");
+
+        Optional<Token> existingToken = tokenRepository.findTokenByIdentifier(identifier);
+
+        if (existingToken.isPresent()) {
+            Token token = existingToken.get();
+            return new DefaultCsrfToken("X-CSRF-TOKEN", "_csrf", token.getToken());
+        }
         return null;
     }
 }
