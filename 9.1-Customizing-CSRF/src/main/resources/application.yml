@@ -1,3 +1,8 @@
 spring:
   application:
     name: 9-Customizing-CSRF-Protection
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/spring-security
+    username: postgres
+    password: root
