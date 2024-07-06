@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: 12-Filtering-In-Spring-Data-Repositories
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/spring-security
+    username: postgresql
+    password: root
