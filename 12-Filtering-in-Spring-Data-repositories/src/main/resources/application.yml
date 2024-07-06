@@ -4,5 +4,9 @@ spring:
 
   datasource:
     url: jdbc:postgresql://localhost:5432/spring-security
-    username: postgresql
+    username: postgres
     password: root
+
+  sql:
+    init:
+      mode: always
