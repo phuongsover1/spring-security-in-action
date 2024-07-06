@@ -4,7 +4,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.DefaultCsrfToken;
 import org.springframework.stereotype.Component;
+
+import java.util.UUID;
 
 @Component
 public class CustomCsrfTokenRepository implements CsrfTokenRepository {
@@ -16,7 +19,8 @@ public class CustomCsrfTokenRepository implements CsrfTokenRepository {
 
     @Override
     public CsrfToken generateToken(HttpServletRequest request) {
-        return null;
+        String uuid = UUID.randomUUID().toString();
+        return new DefaultCsrfToken("X-CSRF-TOKEN", "_csrf", uuid);
     }
 
     @Override
