@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.util.Base64;
@@ -33,7 +34,7 @@ public class Application {
 
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
 
-            byte[] digested = messageDigest.digest(toBase64CodeVerifier.getBytes());
+            byte[] digested = messageDigest.digest(toBase64CodeVerifier.getBytes(StandardCharsets.US_ASCII));
             String toBase64CodeChallenge = Base64.getUrlEncoder()
                     .withoutPadding()
                     .encodeToString(digested);

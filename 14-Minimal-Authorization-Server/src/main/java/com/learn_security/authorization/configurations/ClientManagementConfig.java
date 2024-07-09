@@ -2,6 +2,7 @@ package com.learn_security.authorization.configurations;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.oidc.OidcScopes;
@@ -14,6 +15,7 @@ import java.util.UUID;
 @Configuration
 public class ClientManagementConfig {
     @Bean
+    @Profile("Auhorization_Code")
     public RegisteredClientRepository registeredClientRepository() {
         RegisteredClient registeredClient =
                 RegisteredClient.withId(UUID.randomUUID().toString())
@@ -31,5 +33,25 @@ public class ClientManagementConfig {
 
         return new InMemoryRegisteredClientRepository(registeredClient);
     }
+
+    @Bean
+    @Profile("Client_Credential")
+    public RegisteredClientRepository registeredClientUsingClientCredentialRepository() {
+        RegisteredClient registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
+                .clientId("client")
+                .clientSecret("secret")
+                .clientAuthenticationMethod(
+                        ClientAuthenticationMethod.CLIENT_SECRET_BASIC
+                )
+                .authorizationGrantType(
+                        AuthorizationGrantType.CLIENT_CREDENTIALS
+                )
+                .scope("CUSTOM")
+                .build();
+
+        return new InMemoryRegisteredClientRepository(registeredClient);
+    }
+
+
 
 }

@@ -1,3 +1,5 @@
 spring:
   application:
     name: 14-Minimal-Authorization-Server
+  profiles:
+    active: Client_Credential
