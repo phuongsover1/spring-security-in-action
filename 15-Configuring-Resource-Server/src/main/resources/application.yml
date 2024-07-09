@@ -1,3 +1,5 @@
 spring:
   application:
     name: 15-Configuring-Resource-Server
+server:
+  port: 9090
