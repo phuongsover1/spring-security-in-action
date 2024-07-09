@@ -4,6 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -21,6 +22,7 @@ public class Application {
     }
 
     @Bean
+    @Profile("Auhorization_Code")
     public CommandLineRunner setUpTempVerifierAndChallengeCode() {
         return args -> {
             SecureRandom secureRandom = new SecureRandom();
