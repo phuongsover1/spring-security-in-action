@@ -19,6 +19,10 @@ public class ProjectConfig {
                         j -> j.jwkSetUri(keySetURI)
                 )
         );
+
+        http.authorizeHttpRequests(
+                c -> c.anyRequest().authenticated()
+        );
         return http.build();
     }
 }
