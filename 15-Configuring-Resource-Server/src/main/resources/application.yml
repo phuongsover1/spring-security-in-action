@@ -3,3 +3,5 @@ spring:
     name: 15-Configuring-Resource-Server
 server:
   port: 9090
+
+keySetURI: http://localhost:8080/oauth2/jwks
