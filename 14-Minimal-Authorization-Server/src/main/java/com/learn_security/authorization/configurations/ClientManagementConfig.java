@@ -12,6 +12,7 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.settings.OAuth2TokenFormat;
 import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
 
+import java.time.Duration;
 import java.util.UUID;
 
 @Configuration
@@ -68,6 +69,7 @@ public class ClientManagementConfig {
                 )
                 .tokenSettings(TokenSettings.builder()
                         .accessTokenFormat(OAuth2TokenFormat.REFERENCE)
+                        .accessTokenTimeToLive(Duration.ofHours(12))
                         .build())
                 .scope("CUSTOM")
                 .build();
