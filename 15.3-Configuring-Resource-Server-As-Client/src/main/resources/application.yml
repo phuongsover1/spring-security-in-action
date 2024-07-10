@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: 15.3-Configuring-Resource-Server-As-Client
+server:
+  port: 9090

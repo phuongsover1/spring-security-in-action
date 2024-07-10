@@ -1,0 +1,3 @@
+spring:
+  application:
+    name: 15.3-Configuring-Authorization-Server-Accept-Resource-Server-Client
