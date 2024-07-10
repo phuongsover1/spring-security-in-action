@@ -4,7 +4,7 @@ spring:
 server:
   port: 9090
 
-introspectionURI: http://localhost:8080/oauth2/instropect
+introspectionURI: http://localhost:8080/oauth2/introspect
 
 resourceserver:
   clientID: resource_server
