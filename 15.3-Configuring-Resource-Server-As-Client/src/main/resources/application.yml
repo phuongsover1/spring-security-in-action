@@ -3,3 +3,9 @@ spring:
     name: 15.3-Configuring-Resource-Server-As-Client
 server:
   port: 9090
+
+introspectionURI: http://localhost:8080/oauth2/instropect
+
+resourceserver:
+  clientID: resource_server
+  secret: resource_server_secret
