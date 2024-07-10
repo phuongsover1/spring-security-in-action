@@ -7,6 +7,9 @@ import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.oauth2.jwt.JwtClaimsSet;
+import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
+import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -40,5 +43,13 @@ public class KeyPairManagementConfig {
         return new ImmutableJWKSet<>(jwkSet);
 
 
+    }
+
+    @Bean
+    public OAuth2TokenCustomizer<JwtEncodingContext> jwtCustomizer() {
+        return context -> {
+            JwtClaimsSet.Builder claims = context.getClaims();
+            claims.claim("priority", "HIGH");
+        };
     }
 }
