@@ -21,6 +21,16 @@ public class ProjectConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
+        http.oauth2ResourceServer(
+                c -> c.opaqueToken(
+                        o -> o.introspectionUri(instropectionUri)
+                                .introspectionClientCredentials(
+                                        resourceServerClientID,
+                                        resourceServerClientSecret
+                                )
+                )
+        );
+
         http.authorizeHttpRequests(
                 c -> c.anyRequest().authenticated()
         );
