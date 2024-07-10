@@ -11,12 +11,20 @@ public class ProjectConfig {
     @Value("${keySetURI}")
     private String keySetURI;
 
+    private final JwtAuthenticationConverter jwtAuthenticationConverter;
+
+    public ProjectConfig(JwtAuthenticationConverter jwtAuthenticationConverter) {
+        this.jwtAuthenticationConverter = jwtAuthenticationConverter;
+    }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.oauth2ResourceServer(
                 c -> c.jwt(
                         j -> j.jwkSetUri(keySetURI)
+                                .jwtAuthenticationConverter(jwtAuthenticationConverter)
+
                 )
         );
 
