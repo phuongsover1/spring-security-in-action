@@ -1,0 +1,3 @@
+spring:
+  application:
+    name: 15.4-Configuring-JWT-Authorization-Server-1
