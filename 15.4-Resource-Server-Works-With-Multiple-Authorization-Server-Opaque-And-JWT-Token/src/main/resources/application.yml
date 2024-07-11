@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: 15-Configuring-Resource-server-works-with-multiple-authorization-servers
+
+jwkSetURI: http://localhost:7070/oauth2/jwks
+
+introspectionURI: http://localhost:8080/oauth2/introspect
+
+clientID: resource_server
+clientSecret: resource_server_secret
