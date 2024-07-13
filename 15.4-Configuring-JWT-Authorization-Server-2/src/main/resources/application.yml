@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: 15.4-Configuring-JWT-Authorization-Server-2
+
+server:
+  port: 8080
