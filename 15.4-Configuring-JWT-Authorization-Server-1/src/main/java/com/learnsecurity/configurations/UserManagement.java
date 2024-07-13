@@ -16,7 +16,7 @@ public class UserManagement {
         UserDetails u1 = User.builder()
                 .username("phuong_server_1")
                 .password("password")
-                .roles("USER")
+                .authorities("READ")
                 .build();
 
         return new InMemoryUserDetailsManager(u1);

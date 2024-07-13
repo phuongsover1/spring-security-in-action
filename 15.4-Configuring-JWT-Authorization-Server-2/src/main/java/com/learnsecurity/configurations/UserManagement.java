@@ -14,9 +14,9 @@ public class UserManagement {
     @Bean
     public UserDetailsService userDetailsService() {
         UserDetails u1 = User.builder()
-                .username("phuong_server_1")
+                .username("phuong_server_2")
                 .password("password")
-                .roles("USER")
+                .authorities("WRITE")
                 .build();
 
         return new InMemoryUserDetailsManager(u1);

@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: 15.4-Resource-Server-Serves-Two-Authorization-Servers
+
+server:
+  port: 9090
+
+server1_keySetURI: http://localhost:7070/oauth2/jwks
+server2_keySetURI: http://localhost:8080/oauth2/jwks
+authorization_server_1: http://localhost:7070
+authorization_server_2: http://localhost:8080
