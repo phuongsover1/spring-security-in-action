@@ -14,30 +14,30 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 public class ProjectConfig {
 
+    private final JwtAuthenticationConverter jwtAuthenticationConverter;
+
     @Value("${authorization_server_1}")
     private String authorizationServer_1;
-
     @Value("${authorization_server_2}")
     private String authorizationServer_2;
+
+    public ProjectConfig(JwtAuthenticationConverter jwtAuthenticationConverter) {
+        this.jwtAuthenticationConverter = jwtAuthenticationConverter;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.oauth2ResourceServer(
                 j -> j.authenticationManagerResolver(
                         authenticationManagerResolver()
+                ).jwt(
+                        t -> t.jwtAuthenticationConverter(jwtAuthenticationConverter)
                 )
         );
         http.authorizeHttpRequests(c -> c.anyRequest().authenticated());
         return http.build();
     }
 
-    ;
 
-    @Bean
-    public AuthenticationManagerResolver<HttpServletRequest> authenticationManagerResolver() {
-        var a = new JwtIssuerAuthenticationManagerResolver(
-                authorizationServer_1, authorizationServer_2
-        );
-        return a;
-    }
+
 }
