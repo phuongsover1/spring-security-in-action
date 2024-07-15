@@ -8,6 +8,7 @@ import com.nimbusds.jose.proc.SecurityContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
@@ -19,6 +20,7 @@ import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.util.List;
 import java.util.UUID;
 
 @Configuration
@@ -56,7 +58,8 @@ public class KeyPairSetManagementConfig {
             JwtClaimsSet.Builder claims = context.getClaims();
             Authentication a = context.getPrincipal();
             UserDetails u = userDetailsService.loadUserByUsername(a.getName());
-            claims.claim("authorities", u.getAuthorities());
+            List<String> test = u.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
+            claims.claim("authorities", test);
         };
     }
 }
