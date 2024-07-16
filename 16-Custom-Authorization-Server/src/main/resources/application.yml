@@ -3,3 +3,6 @@ spring:
     name: 16-Minimal-Authorization-Server
   profiles:
     active: Auhorization_Code
+
+server:
+  port: 7070

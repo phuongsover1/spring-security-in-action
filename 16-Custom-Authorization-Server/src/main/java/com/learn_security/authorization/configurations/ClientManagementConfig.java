@@ -30,7 +30,7 @@ public class ClientManagementConfig {
                         .authorizationGrantType(
                                 AuthorizationGrantType.AUTHORIZATION_CODE
                         )
-                        .redirectUri("https://www.manning.com/authorized")
+                        .redirectUri("http://localhost:8080/login/oauth2/code/my_authorization_server")
                         .scope(OidcScopes.OPENID)
                         .build();
 

@@ -11,3 +11,15 @@ spring:
           github:
             client-id: ${GITHUB_CLIENT_ID}
             client-secret: ${GITHUB_CLIENT_SECRET}
+          my_authorization_server:
+            client-id: ${CUSTOM_CLIENT_ID}
+            client-secret: ${CUSTOM_CLIENT_SECRET}
+            client-name: Custom
+            provider: my_authorization_server
+            client-authentication-method: client_secret_basic
+            redirect-uri: http://localhost:8080/login/oauth2/code/my_authorization_server
+            scope:
+              - openid
+        provider:
+          my_authorization_server:
+            issuer-uri: http://127.0.0.1:7070
