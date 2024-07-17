@@ -1,5 +1,7 @@
 spring:
   application:
     name: 16.1-Configuring-Oauth2-Client
+  profiles:
+    active: client-credentials
 
 enabled_oauth2_provider: github,google

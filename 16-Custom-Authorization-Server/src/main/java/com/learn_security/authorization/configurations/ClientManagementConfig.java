@@ -49,7 +49,7 @@ public class ClientManagementConfig {
                 .authorizationGrantType(
                         AuthorizationGrantType.CLIENT_CREDENTIALS
                 )
-                .scope("CUSTOM")
+                .scope(OidcScopes.OPENID)
                 .build();
 
         return new InMemoryRegisteredClientRepository(registeredClient);

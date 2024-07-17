@@ -2,7 +2,7 @@ spring:
   application:
     name: 16-Minimal-Authorization-Server
   profiles:
-    active: Auhorization_Code
+    active: Client_Credential
 
 server:
   port: 7070
