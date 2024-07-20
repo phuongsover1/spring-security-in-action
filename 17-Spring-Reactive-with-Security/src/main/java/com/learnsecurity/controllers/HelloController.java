@@ -19,4 +19,9 @@ public class HelloController {
 
         return message;
     }
+
+    @GetMapping("/ciao")
+    public Mono<String> ciao() {
+        return Mono.just("ciao");
+    }
 }
