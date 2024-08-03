@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: 17.Spring-reactive-resource-server-keycloak
+
+server:
+  port: 9090
+
+keycloak:
+  jwkSetURI: http://localhost:8080/realms/myrealm/protocol/openid-connect/certs
