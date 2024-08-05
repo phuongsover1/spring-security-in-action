@@ -29,51 +29,51 @@ import java.net.http.HttpRequest;
 @SpringBootTest
 @AutoConfigureMockMvc
 public class MainTests {
-   @Autowired
-   private MockMvc mvc;
+  @Autowired
+  private MockMvc mvc;
 
-   @Autowired
-   private UserDetailsService uds;
+  @Autowired
+  private UserDetailsService uds;
 
-   @Test
-   public void helloUnauthenticated() throws Exception {
-     mvc.perform(get("/hello"))
-         .andExpect(status().isUnauthorized());
-   }
+  @Test
+  public void helloUnauthenticated() throws Exception {
+    mvc.perform(get("/hello"))
+        .andExpect(status().isUnauthorized());
+  }
 
-   @Test
-   @WithMockUser()
-   public void helloAuthenticated() throws Exception {
-      mvc.perform(get("/hello"))
-          .andExpect(content().string("Hello World"))
-          .andExpect(status().isOk());
-   }
+  @Test
+  @WithMockUser()
+  public void helloAuthenticated() throws Exception {
+    mvc.perform(get("/hello"))
+        .andExpect(content().string("Hello World"))
+        .andExpect(status().isOk());
+  }
 
 
-   @Test
-   @WithMockUser(username = "mary")
-   public void helloAuthenticatedMary() throws Exception {
-      mvc.perform(get("/hello"))
-          .andExpect(content().string("Hello, mary!"))
-          .andExpect(status().isOk());
-   }
+  @Test
+  @WithMockUser(username = "mary")
+  public void helloAuthenticatedMary() throws Exception {
+    mvc.perform(get("/hello"))
+        .andExpect(content().string("Hello, mary!"))
+        .andExpect(status().isOk());
+  }
 
-   @Test
-   public void helloAuthenticatedWithUserUsingRequestPostProcessor() throws Exception {
-      mvc.perform(
-          get("/hello")
-              .with(user("phuong"))
-      )
-          .andExpect(content().string("Hello, phuong!"))
-          .andExpect(status().isOk());
-   }
+  @Test
+  public void helloAuthenticatedWithUserUsingRequestPostProcessor() throws Exception {
+    mvc.perform(
+            get("/hello")
+                .with(user("phuong"))
+        )
+        .andExpect(content().string("Hello, phuong!"))
+        .andExpect(status().isOk());
+  }
 
-   @Test
-   @WithUserDetails("john")
-   public void helloAuthenticatedWithUserDetailsService() throws Exception {
-      mvc.perform(get("/hello"))
-          .andExpect(content().string("Hello, john!"))
-          .andExpect(status().isOk());
-   }
+  @Test
+  @WithUserDetails("john")
+  public void helloAuthenticatedWithUserDetailsService() throws Exception {
+    mvc.perform(get("/hello"))
+        .andExpect(content().string("Hello, john!"))
+        .andExpect(status().isOk());
+  }
 
 }
