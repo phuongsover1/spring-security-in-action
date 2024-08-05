@@ -1,12 +1,15 @@
 package com.learn_security;
 
 import com.learn_security.custom_authentication.WithCustomUser;
+import com.learn_security.services.NameService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,6 +26,7 @@ import static org.springframework.test.web.servlet.MockMvcBuilder.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 import java.net.http.HttpRequest;
@@ -83,6 +87,28 @@ public class MainTests {
     mvc.perform(get("/hello"))
         .andExpect(content().string("Hello, khang!"))
         .andExpect(status().isOk());
+  }
+
+  @Autowired
+  private NameService nameService;
+
+  @Test
+  void testNameServiceWithNoUser() {
+    assertThrows(AuthenticationException.class, () -> nameService.getName());
+  }
+
+  @Test
+  @WithMockUser(authorities = "READ")
+  void testnameSericeWithUserButWrongAuthority() {
+    assertThrows(AccessDeniedException.class, () -> nameService.getName());
+  }
+
+  @Test
+  @WithUserDetails("mary")
+  void testNameServiceWithUserButCorrectAuthority() {
+    var result = nameService.getName();
+
+    assertEquals("Returned name completely", result);
   }
 
 }
