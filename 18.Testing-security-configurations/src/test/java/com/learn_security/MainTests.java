@@ -1,5 +1,6 @@
 package com.learn_security;
 
+import com.learn_security.custom_authentication.WithCustomUser;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -73,6 +74,14 @@ public class MainTests {
   public void helloAuthenticatedWithUserDetailsService() throws Exception {
     mvc.perform(get("/hello"))
         .andExpect(content().string("Hello, john!"))
+        .andExpect(status().isOk());
+  }
+
+  @Test
+  @WithCustomUser(username = "khang")
+  public void helloAuthenticatedWithCustomUser() throws Exception {
+    mvc.perform(get("/hello"))
+        .andExpect(content().string("Hello, khang!"))
         .andExpect(status().isOk());
   }
 
