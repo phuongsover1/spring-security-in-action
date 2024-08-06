@@ -4,5 +4,5 @@ spring:
 
   datasource:
     url: jdbc:postgresql://localhost:5432/spring-security
-    username: postgres
-    password: root
+    username: phuong
+    password: phuong
