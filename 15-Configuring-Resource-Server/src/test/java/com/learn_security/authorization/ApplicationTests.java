@@ -32,4 +32,12 @@ public class ApplicationTests {
         get("/demo")
     ).andExpect(status().isUnauthorized());
   }
+
+  @Test
+  void demoEndpoointSuccessfulAuthenticationOpaqueTokenTest() throws Exception {
+    mvc.perform(
+        get("/demo").with(SecurityMockMvcRequestPostProcessors.opaqueToken())
+    )
+        .andExpect(status().isOk());
+  }
 }
