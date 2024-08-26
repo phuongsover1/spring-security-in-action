@@ -62,10 +62,12 @@ public class ProjectConfig {
     if (path.equals("/hello")) {
       return a.map(isAdmin())
           .map(auth -> auth && !restrictedTime)
+//          .map(auth -> auth)
           .map(AuthorizationDecision::new);
     }
 
-    return Mono.just(new AuthorizationDecision(!restrictedTime));
+//    return Mono.just(new AuthorizationDecision(!restrictedTime));
+    return Mono.just(new AuthorizationDecision(true));
   }
 
   private String getRequestPath(AuthorizationContext c) {
