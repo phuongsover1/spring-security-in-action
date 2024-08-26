@@ -8,6 +8,8 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.mockUser;
+
 @SpringBootTest
 @AutoConfigureWebTestClient
 public class MainTests {
@@ -31,7 +33,15 @@ public class MainTests {
         .uri("/ciao")
         .exchange()
         .expectStatus().isOk();
+
+    client.mutateWith(mockUser())
+        .get()
+        .uri("/ciao")
+        .exchange()
+        .expectStatus().isOk();
   }
+
+
 
 
 }
